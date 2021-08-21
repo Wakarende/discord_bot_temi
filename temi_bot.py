@@ -1,4 +1,12 @@
 import discord
+from dotenv import load_dotenv
+import os
+
+
+load_dotenv()
+
+print(os.getenv('DISCORD_TOKEN'))
+TOKEN = os.getenv('DISCORD_TOKEN')
 
 client = discord.Client()
 
@@ -23,4 +31,4 @@ async def on_message(message):
 
     await general_channel.send(embed=myEmbed) 
 
-client.run('ODc4MzE3NzYxMDE1NzIxOTg0.YR_bKA.7g-kvLvWaxGnkIFEOKppWOeBXL4')
+client.run(TOKEN)
