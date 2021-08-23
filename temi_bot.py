@@ -10,12 +10,14 @@ TOKEN = os.getenv('DISCORD_TOKEN')
 
 client = discord.Client()
 
+
 @client.event
 async def on_ready():
+
 # Functionality
   general_channel = client.get_channel(878219278376124421)
 
-  await general_channel.send('Testing Announcements!')
+  await general_channel.send('Bot is online')
 
 @client.event
 async def on_message(message):
@@ -30,5 +32,23 @@ async def on_message(message):
     myEmbed.set_author(name='Temi')
 
     await general_channel.send(embed=myEmbed) 
+
+# New Member 
+class MyClient(discord.Client):
+    async def on_ready(self):
+        print(f'Logged in as {self.user} (ID: {self.user.id})')
+        print('------')
+
+    async def on_member_join(self, member):
+        guild = member.guild
+        if guild.system_channel is not None:
+            to_send = f'Welcome {member.mention} to {guild.name}!'
+            await guild.system_channel.send(to_send)
+
+intents = discord.Intents.default()
+intents.members = True
+
+client = MyClient(intents=intents)
+
 
 client.run(TOKEN)
