@@ -10,6 +10,11 @@ TOKEN = os.getenv('DISCORD_TOKEN')
 
 client = discord.Client()
 
+intents = discord.Intents.default()
+intents.members = True
+
+client = discord.Client(intents=intents)
+
 
 @client.event
 async def on_ready():
@@ -39,16 +44,23 @@ class MyClient(discord.Client):
         print(f'Logged in as {self.user} (ID: {self.user.id})')
         print('------')
 
-    async def on_member_join(self, member):
-        guild = member.guild
-        if guild.system_channel is not None:
-            to_send = f'Welcome {member.mention} to {guild.name}!'
-            await guild.system_channel.send(to_send)
+    # async def on_member_join(self, member):
+    #     guild = member.guild
+    #     if guild.system_channel is not None:
+    #         to_send = f'Welcome {member.mention} to {guild.name}!'
+    #         await guild.system_channel.send(to_send)
 
-intents = discord.Intents.default()
-intents.members = True
+# Welcome Users 
+@client.event
+async def on_member_join(member):
+  guild = client.get_guild(878219278376124416)
+  channel = guild.get_channel(878219278376124418)
+  await channel.send(f'Welcome to Play with Temi Community {member.mention} ! :partying_face:, Ensure you read the rules and have a blast!')
+  await member.send(f'Welcome to {guild.name}, {member.name} :partying_face:')
 
-client = MyClient(intents=intents)
+
+
+
 
 
 client.run(TOKEN)
